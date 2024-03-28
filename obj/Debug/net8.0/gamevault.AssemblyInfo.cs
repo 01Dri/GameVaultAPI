@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("gamevault")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+589c16e3031e50e6696e0635d69a3b598d789e9b")]
 [assembly: System.Reflection.AssemblyProductAttribute("gamevault")]
 [assembly: System.Reflection.AssemblyTitleAttribute("gamevault")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
