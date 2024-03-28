@@ -2755,11 +2755,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/dridev/.local/share/Trash/files/basicapi/gamevault/gamevault.csproj",
+      "projectUniqueName": "/home/dridev/Desktop/gamevault/gamevault.csproj",
       "projectName": "gamevault",
-      "projectPath": "/home/dridev/.local/share/Trash/files/basicapi/gamevault/gamevault.csproj",
+      "projectPath": "/home/dridev/Desktop/gamevault/gamevault.csproj",
       "packagesPath": "/home/dridev/.nuget/packages/",
-      "outputPath": "/home/dridev/.local/share/Trash/files/basicapi/gamevault/obj/",
+      "outputPath": "/home/dridev/Desktop/gamevault/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/dridev/.nuget/NuGet/NuGet.Config"

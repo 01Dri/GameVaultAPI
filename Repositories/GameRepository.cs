@@ -1,4 +1,5 @@
 using gamevault.DatabaseConfig;
+using gamevault.Exceptions;
 using gamevault.Models;
 using Npgsql;
 
@@ -13,23 +14,30 @@ public class GameRepository : IGameRepository
         _dbConfig = dbConfig;
     }
 
+
     public void SaveGame(Game game)
     {
-        string schema = _dbConfig.GetSchemaDatabase();
-        string sql = $"INSERT INTO {schema}.gamevault (name, description, average_rating, genres, dowloands) VALUES (@Name, @Description, @AverageRating, @Genre, @Downloads)";
+        string? schema = _dbConfig.GetSchemaDatabase();
+        string sql = $"INSERT INTO {schema}.gamevault (name, description, average_rating, genres, downloads) VALUES (@Name, @Description, @AverageRating, @Genre, @Downloads)";
         using (var conn = _dbConfig.GetConnectionDatabase())
         {
-            conn.Open();
-
-            using (var command = new NpgsqlCommand(sql, conn))
+            try
             {
-                command.Parameters.AddWithValue("@Name", game.Name);
-                command.Parameters.AddWithValue("@Description", game.Description);
-                command.Parameters.AddWithValue("@Name", game.AverageRating);
-                command.Parameters.AddWithValue("@Name", game.Genres);
-                command.Parameters.AddWithValue("@Name", game.Downloads);
-                command.ExecuteNonQuery();
+                conn.Open();
+                using (var command = new NpgsqlCommand(sql, conn))
+                {
+                    command.Parameters.AddWithValue("@Name", game.Name);
+                    command.Parameters.AddWithValue("@Description", game.Description);
+                    command.Parameters.AddWithValue("@AverageRating", game.AverageRating);
+                    command.Parameters.AddWithValue("@Genre", (int)game.Genres);
+                    command.Parameters.AddWithValue("@Downloads", game.Downloads);
+                    command.ExecuteNonQuery();
+                }
             }
+            catch (Exception ex)
+            {
+                throw new FailedConnectionDatabaseException(ex.Message);
+            } 
         }
     }
 }

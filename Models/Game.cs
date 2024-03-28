@@ -6,21 +6,22 @@ namespace gamevault.Models;
 
 public class Game
 {
-    [Key]
-    public int Id { get; set; }
-    [Required]
-    [MaxLength(40)]
+    public int? Id { get; set; }
     public string Name { get; set; }
-    [MaxLength(120)]
     public string Description { get; set; }
-    [Required]
     public double AverageRating { get; set; }
-    [Required]
     public Genres Genres { get; set; }
-    [Required]
-    [MinLength(0)]
     public int Downloads { get; set; }
-    
+
+    public Game(int? id, string name, string description, double averageRating, Genres genres, int downloads)
+    {
+        Id = id;
+        Name = name;
+        Description = description;
+        AverageRating = averageRating;
+        Genres = genres;
+        Downloads = downloads;
+    }
 }
 
 

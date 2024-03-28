@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KdgD6EblELMrnOtw/0/FXN+Mcxt+1JD9oyHSdr6zIr8RQs9ve1aBCFgHya426XxtQQLnLphUipfBxYexeGEo9g==",
+  "dgSpecHash": "GpieL6d5OL02bKo5ba3oy8E2FqlDO8d0X1jvoj925cI0fdsYPjI+jCnS3mAyUG/TaUNjCadEvYBAejSlbcNB4w==",
   "success": true,
-  "projectFilePath": "/home/dridev/.local/share/Trash/files/basicapi/gamevault/gamevault.csproj",
+  "projectFilePath": "/home/dridev/Desktop/gamevault/gamevault.csproj",
   "expectedPackageFiles": [
     "/home/dridev/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/home/dridev/.nuget/packages/microsoft.aspnetcore.openapi/8.0.3/microsoft.aspnetcore.openapi.8.0.3.nupkg.sha512",

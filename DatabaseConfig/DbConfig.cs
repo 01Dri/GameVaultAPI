@@ -12,22 +12,21 @@ public class DbConfig
         _configuration = configuration;
     }
 
-    public string GetSchemaDatabase()
+    public string? GetSchemaDatabase()
     {
-        return _configuration.GetConnectionString("YourDataSchema") ?? throw new InvalidOperationException();
+        return _configuration["Schema:YourDataSchema"];
     }
 
     public string GetConnectionString()
     {
-        return _configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException();
+        var stringConnection =  _configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException();
+        Console.WriteLine(stringConnection);
+        return stringConnection;
     }
 
     public NpgsqlConnection GetConnectionDatabase()
     {
-        string connectionString = GetConnectionString();
-        string schema = GetSchemaDatabase();
-        string connectionStringWithSchema = $"{connectionString};SearchPath={schema}";
-        return new NpgsqlConnection(connectionStringWithSchema);
+        return new NpgsqlConnection(GetConnectionString() + ";SearchPath=" + GetSchemaDatabase());
 
     }
 
