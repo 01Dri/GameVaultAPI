@@ -1,4 +1,5 @@
 using gamevault.DatabaseConfig;
+using gamevault.Enums;
 using gamevault.Exceptions;
 using gamevault.Models;
 using Npgsql;
@@ -7,37 +8,70 @@ namespace gamevault.Repositories;
 
 public class GameRepository : IGameRepository
 {
-    private DbConfig _dbConfig;
+    private readonly IDatabaseConnection _databaseConnection;
 
-    public GameRepository(DbConfig dbConfig)
+    public GameRepository(IDatabaseConnection databaseConnection)
     {
-        _dbConfig = dbConfig;
+        _databaseConnection = databaseConnection;
     }
 
 
-    public void SaveGame(Game game)
+    public int SaveGame(Game game)
     {
-        string? schema = _dbConfig.GetSchemaDatabase();
-        string sql = $"INSERT INTO {schema}.gamevault (name, description, average_rating, genres, downloads) VALUES (@Name, @Description, @AverageRating, @Genre, @Downloads)";
-        using (var conn = _dbConfig.GetConnectionDatabase())
+
+        string sql =
+            $"INSERT INTO {_databaseConnection.SchemaDatabase()}.gamevault (name, description, average_rating, genres, downloads) VALUES (@Name, @Description, @AverageRating, @Genre, @Downloads) RETURNING id";
+
         {
-            try
+            using (var conn = _databaseConnection.Connection())
+            using (var command = new NpgsqlCommand(sql, conn))
             {
                 conn.Open();
-                using (var command = new NpgsqlCommand(sql, conn))
+                command.Parameters.AddWithValue("@Name", game.Name);
+                command.Parameters.AddWithValue("@Description", game.Description);
+                command.Parameters.AddWithValue("@AverageRating", game.AverageRating);
+                command.Parameters.AddWithValue("@Genre", (int)game.Genres);
+                command.Parameters.AddWithValue("@Downloads", game.Downloads);
+                var id = command.ExecuteScalar();
+                if (id != null && id != DBNull.Value)
                 {
-                    command.Parameters.AddWithValue("@Name", game.Name);
-                    command.Parameters.AddWithValue("@Description", game.Description);
-                    command.Parameters.AddWithValue("@AverageRating", game.AverageRating);
-                    command.Parameters.AddWithValue("@Genre", (int)game.Genres);
-                    command.Parameters.AddWithValue("@Downloads", game.Downloads);
-                    command.ExecuteNonQuery();
+                    return Convert.ToInt32(id);
                 }
+
+                throw new FailedToSaveGameOnDbException("Failed to insert game on DB !");
             }
-            catch (Exception ex)
+        }
+    }
+
+    public List<Game> FindAllGames()
+    {
+        string sql =
+            $"SELECT * FROM {_databaseConnection.SchemaDatabase()}.gamevault";
+
+        using (var conn = _databaseConnection.Connection())
+        using (var command = new NpgsqlCommand(sql, conn))
+        {
+            conn.Open();
+            using (var reader = command.ExecuteReader())
             {
-                throw new FailedConnectionDatabaseException(ex.Message);
-            } 
+                List<Game> games = new List<Game>();
+                while (reader.Read())
+                {
+                    var product = new Game
+                    {
+                        Id = reader.GetInt32(0),
+                        Name = reader.GetString(1),
+                        Description = reader.GetString(2),
+                        AverageRating = reader.GetDouble(3),
+                        Genres = (Genres)reader.GetInt32(4),
+                        Downloads = reader.GetInt32(5)
+                    };
+                    games.Add(product);
+                }
+
+                return games;
+            }
         }
     }
 }
+

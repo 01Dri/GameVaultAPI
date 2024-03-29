@@ -13,6 +13,10 @@ public class Game
     public Genres Genres { get; set; }
     public int Downloads { get; set; }
 
+    public Game()
+    {
+    }
+
     public Game(int? id, string name, string description, double averageRating, Genres genres, int downloads)
     {
         Id = id;

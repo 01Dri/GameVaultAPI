@@ -16,8 +16,19 @@ public class GameController : Controller
     [Route("/game")]
     public IActionResult Post([FromBody] GameDTO gameDto)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
         var result = _gameService.SaveGame(gameDto);
-        return Ok(result);
+        return CreatedAtAction(null, null, result);
+    }
+    
+    [HttpGet]
+    [Route("/game")]
+    public IActionResult GetAll()
+    {
+        return Ok(_gameService.FindAllGames());
     }
 }
 

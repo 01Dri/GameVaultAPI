@@ -1,4 +1,5 @@
 using gamevault.Enums;
+using gamevault.Exceptions;
 using gamevault.Models;
 using gamevault.Models.Dto;
 using gamevault.Repositories;
@@ -18,8 +19,16 @@ public class GameService : IGameService
     public GameResponseDTO SaveGame(GameDTO gameDto)
     {
         Genres genre = (Genres)Enum.Parse(typeof(Genres), gameDto.GenreName);
-        Game game = new Game(null, gameDto.Name, gameDto.Description, gameDto.AverageRating, genre, 0);
-        _gameRepository.SaveGame(game);
-        return new GameResponseDTO(game.Name, game.Description, game.AverageRating, game.Genres.ToString(), 0);
+        Game game = new Game(null, gameDto.Name, gameDto.Description, 0, genre, 0);
+        int id = _gameRepository.SaveGame(game);
+        return new GameResponseDTO(id, game.Name, game.Description, game.AverageRating, game.Genres.ToString(), 0);
+    }
+
+    public List<GameResponseDTO> FindAllGames()
+    {
+        List<Game> games = _gameRepository.FindAllGames();
+        return games.Select(x =>
+            new GameResponseDTO(x.Id, x.Name, x.Description, x.AverageRating, x.Genres.ToString(), x.Downloads)).ToList();
+
     }
 }

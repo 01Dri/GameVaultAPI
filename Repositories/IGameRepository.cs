@@ -5,7 +5,7 @@ namespace gamevault.Repositories;
 public interface IGameRepository
 {
 
-    void SaveGame(Game game);
-    
+    int SaveGame(Game game);
 
+    List<Game> FindAllGames();
 }

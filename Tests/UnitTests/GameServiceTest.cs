@@ -27,7 +27,6 @@ public class GameServiceTest
     [Fact]
     public void Save_Game_Test()
     {
-        
         // ARRANGE
         string name = "GTA";
         string description = "Essa é uma descricao";
@@ -50,8 +49,32 @@ public class GameServiceTest
         Assert.Equal(0, result.AverageRating);
         Assert.Equal(mockGameDto.GenreName, result.GenreName);
         Assert.Equal(0, result.Downloads);
-
     }
 
+    [Fact]
+    public void FindAll_Game_By_Test()
+    {
+        // ARRANGE
+        
+        GameResponseDTO mock1 = new GameResponseDTO(1, "death stranding", "jogao", 4.5, Genres.ACTION.ToString(), 123);
+        GameResponseDTO mock2 = new GameResponseDTO(1, "gta", "jogao", 4.5, Genres.ACTION.ToString(), 4);
+        GameResponseDTO mock3 = new GameResponseDTO(1, "dragon ball", "jogao", 4.5, Genres.ACTION.ToString(), 500);
+        
+        Game mockGame1 = new Game(1, "death stranding", "jogao", 4.5, Genres.ACTION, 123);
+        Game mockGame2 = new Game(1, "gta", "jogao", 4.5, Genres.ACTION, 4);
+        Game mockGame3 = new Game(1, "dragon ball", "jogao", 4.5, Genres.ACTION, 500);
+        
+        
+        List<GameResponseDTO> mockListGamesResponseDTO = new List<GameResponseDTO>() { mock1, mock2, mock3 };
+        List<Game> mockListGames = new List<Game>() { mockGame1, mockGame2, mockGame3 };
+        
+        // ACT
+        _mockGameRepository.Setup(x => x.FindAllGames()).Returns(mockListGames);
+        var result = _gameService.FindAllGames();
+        
+        // ASSERT
+        Assert.Equal(3, result.Count());
 
+    }
+    
 }

@@ -8,4 +8,6 @@ public interface IGameService
 
     GameResponseDTO SaveGame(GameDTO gameDto);
 
+    List<GameResponseDTO> FindAllGames();
+
 }

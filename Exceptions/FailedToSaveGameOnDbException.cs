@@ -1,6 +1,10 @@
 namespace gamevault.Exceptions;
 
-public class FailedToSaveGameOnDbException
+public class FailedToSaveGameOnDbException : Exception
 {
+
+    public FailedToSaveGameOnDbException(string message) : base(message)
+    {
+    }
     
 }

@@ -1,6 +1,6 @@
 namespace gamevault.Models.Dto;
 
-public record GameResponseDTO(string Name, string Description, double AverageRating, string GenreName, int Downloads)
+public record GameResponseDTO(int? Id, string Name, string Description, double AverageRating, string GenreName, int Downloads)
 {
     
 }
