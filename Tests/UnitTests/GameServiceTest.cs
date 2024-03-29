@@ -56,16 +56,9 @@ public class GameServiceTest
     {
         // ARRANGE
         
-        GameResponseDTO mock1 = new GameResponseDTO(1, "death stranding", "jogao", 4.5, Genres.ACTION.ToString(), 123);
-        GameResponseDTO mock2 = new GameResponseDTO(1, "gta", "jogao", 4.5, Genres.ACTION.ToString(), 4);
-        GameResponseDTO mock3 = new GameResponseDTO(1, "dragon ball", "jogao", 4.5, Genres.ACTION.ToString(), 500);
-        
         Game mockGame1 = new Game(1, "death stranding", "jogao", 4.5, Genres.ACTION, 123);
-        Game mockGame2 = new Game(1, "gta", "jogao", 4.5, Genres.ACTION, 4);
-        Game mockGame3 = new Game(1, "dragon ball", "jogao", 4.5, Genres.ACTION, 500);
-        
-        
-        List<GameResponseDTO> mockListGamesResponseDTO = new List<GameResponseDTO>() { mock1, mock2, mock3 };
+        Game mockGame2 = new Game(2, "gta", "jogao", 4.5, Genres.ACTION, 4);
+        Game mockGame3 = new Game(3, "dragon ball", "jogao", 4.5, Genres.ACTION, 500);
         List<Game> mockListGames = new List<Game>() { mockGame1, mockGame2, mockGame3 };
         
         // ACT
